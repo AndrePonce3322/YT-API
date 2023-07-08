@@ -1,31 +1,31 @@
-const downloadRouter = require("express").Router();
-const ytdl = require("ytdl-core");
+const downloadRouter = require('express').Router();
+const ytdl = require('ytdl-core');
 
 // Progress bar
-const cliProgress = require("cli-progress");
+const cliProgress = require('cli-progress');
 const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
-downloadRouter.post("/", async (req, res) => {
+downloadRouter.post('/', async (req, res) => {
   const { url, quality, format } = req.body;
 
   // Validar parametros
-  const formatParams = ["audioonly", "videoandaudio"];
-  const qualityParams = ["highest", "lowest"];
+  const formatParams = ['audioonly', 'videoandaudio'];
+  const qualityParams = ['highest', 'lowest'];
 
   if (!url | !quality | !format)
     return res.status(400).json({
-      error: "Invalid parameters",
+      error: 'Invalid parameters',
       params: {
-        url: "https://www.example.com",
-        quality: "highest | lowest",
-        format: "audioonly | videoandaudio",
+        url: 'https://www.example.com',
+        quality: 'highest | lowest',
+        format: 'audioonly | videoandaudio',
       },
     });
 
   if (format.includes(formatParams) && !qualityParams.includes(quality)) {
     return res
       .status(400)
-      .json({ error: "Invalid quality parameter", params: qualityParams });
+      .json({ error: 'Invalid quality parameter', params: qualityParams });
   }
 
   // Obtener la ID del video
@@ -42,7 +42,7 @@ downloadRouter.post("/", async (req, res) => {
     const audioStream = ytdl(videoID, {
       filter: format,
       quality: quality,
-    }).on("progress", (chunkLength, downloaded, total) => {
+    }).on('progress', (chunkLength, downloaded, total) => {
       bar.start(total, downloaded);
       bar.update(downloaded);
 
@@ -57,8 +57,19 @@ downloadRouter.post("/", async (req, res) => {
       quality: quality,
     }).contentLength;
 
-    // Set Response Headers
-    res.setHeader("Content-Length", audioSize);
+    if (audioSize) {
+      // Set Response Headers
+      res.setHeader('Content-Length', audioSize);
+    } else {
+      console.warn('No se pudo obtener el tamaño del archivo.');
+    }
+
+    // Send Type of Content
+    if (format === 'audioonly') {
+      res.setHeader('Content-Type', 'audio/mp3');
+    } else {
+      res.setHeader('Content-Type', 'video/mp4');
+    }
 
     audioStream.pipe(res);
   });
