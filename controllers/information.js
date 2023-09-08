@@ -8,13 +8,13 @@ informationRouter.post('/', (req, res, next) => {
 
   const videoID = ytdl.getURLVideoID(url);
 
-  const info = ytdl.getInfo(videoID).then((info) => {
+  const info = ytdl.getInfo(`http://www.youtube.com/watch?v=${videoID}`).then((info) => {
     res.json({ info: info.videoDetails });
   });
 
   info.catch((err) => {
     console.log({errorName: err.name, errorMessage: err.message})
-    next(err)
+    next(err);
   });
 });
 
