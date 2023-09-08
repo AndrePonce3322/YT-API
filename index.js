@@ -5,7 +5,7 @@ const cors = require('cors');
 console.clear();
 
 const corsOptions = {
-  origin: 'https://vidcrawler.netlify.app/',
+  origin: 'https://vidcrawler.netlify.app',
   optionsSuccessStatus: 200,
 };
 
