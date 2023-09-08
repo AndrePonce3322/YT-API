@@ -1,55 +1,56 @@
-﻿# My Awesome Backend Project
+# Youtube Downloader Server
 
-Welcome to my GitHub repository for my backend project! This project is focused on building a backend server for a web application using Express.js and MongoDB. As a frontend web developer with experience in React and Angular, I'm excited to dive into backend development and expand my skillset.
+This is a simple Express.js server for downloading videos from YouTube. It provides a RESTful API to fetch video information and initiate downloads.
 
-## Project Overview
+## Table of Contents
 
-In this project, I've set up a backend server using Express.js, a popular Node.js framework for building web applications and APIs. The server interacts with a MongoDB database to store and manage data. I've organized the codebase into different modules and routes to ensure maintainability and modularity.
-
-## Features
-
-- *Environment Variables:* The project uses `dotenv` to manage environment variables, ensuring that sensitive information is kept secure.
-
-- *CORS Configuration:* I've configured Cross-Origin Resource Sharing (CORS) using the `cors` middleware to allow requests from a specific origin (`https://ng-notenexus.netlify.app`).
-
-- *Express Middleware:* The project uses Express middleware to handle JSON parsing, which is essential for processing incoming requests and responses.
-
-- *Routes and Controllers:* I've implemented various routes and controllers to handle different functionalities, such as user management, note storage, user authentication, and verification.
-
-- *Error Handling:* To enhance the user experience, I've included custom error handling middleware (`handleError`) to handle errors gracefully.
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Error Handling](#error-handling)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Getting Started
 
-1. Make sure you have Node.js and npm installed on your system.
-2. Clone this repository to your local machine.
-3. Run `npm install` to install the required dependencies.
-4. Set up your environment variables by creating a `.env` file and filling in the necessary values.
-5. Run the server using `npm start` or `node index.js`.
-6. Access the server by navigating to `http://localhost:3000` in your browser.
+To run this server locally or in your own environment, follow these steps:
 
-## Endpoints
+1. Clone this repository to your local machine:
 
-- `GET /`: Home route that provides a link to access the Mongo Database.
+   ```shell
+   git clone https://github.com/AndrePonce3322/YT-API.git
+   ```
 
-- `GET /db/notes`: Retrieve notes from the MongoDB database.
+2. Install the required dependencies:
 
-- `POST /db/notes`: Create a new note and store it in the database.
+   ```shell
+   npm install
+   ```
 
-- `GET /db/users`: Get information about users from the database.
+3. Configure CORS options in `index.js` to specify the allowed origins.
 
-- `POST /db/login`: User login route for authentication.
+4. Start the server:
 
-- `POST /db/verify`: Verification route for user verification.
+   ```shell
+   npm start
+   ```
 
-## Contact
+The server will run on the specified port or default to port 3000.
 
-If you have any questions, suggestions, or feedback about this project, feel free to contact me. You can find me on GitHub ([@AndrePonce3322](https://github.com/AndrePonce3322)).
+## Usage
 
-Thank you for checking out my backend project! I'm excited to continue learning and expanding my skills as a full-stack developer.
+Once the server is running, you can use it to fetch video information and initiate downloads from your frontend application. The server provides a simple API for this purpose.
 
----
-André
-Full-Stack Developer
-Email: andreponce417@gmail.com
-LinkedIn: [linkedin.com/in/AndrePonce](https://www.linkedin.com/in/andre-ponce-242498181)
-GitHub: [@andrePonce](https://github.com/AndrePonce3322)
+## API Endpoints
+
+- `GET /`: A simple route to check if the server is running.
+
+- `POST /info`: Endpoint to fetch video information by providing a YouTube URL in the request body.
+
+- `POST /download`: Endpoint to initiate video download by providing the video URL in the request body.
+
+## Error Handling
+
+The server includes a custom error handling middleware (`handleErrors`) to catch and handle errors. It responds with appropriate error messages and status codes for different types of errors.
+
+To customize error handling, you can modify the `handleErrors` middleware in `middleware/handleErrors.js`.
