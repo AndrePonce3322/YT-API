@@ -5,7 +5,7 @@ const ytdl = require('ytdl-core');
 const cliProgress = require('cli-progress');
 const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
-downloadRouter.post('/', async (req, res) => {
+downloadRouter.post('/', async (req, res, next) => {
   const { url, quality, format } = req.body;
 
   // Validar parametros
